@@ -110,20 +110,6 @@
         font-style: italic;
         font-weight: 400;
       }
-      .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-      }
-      .nav-link {
-        font-size: 0.85rem;
-        color: var(--tmuted);
-        text-decoration: none;
-        font-weight: 500;
-      }
-      .nav-link:hover {
-        color: var(--forest);
-      }
       .nav-btn {
         background: var(--forest);
         color: var(--bg);
@@ -140,61 +126,10 @@
         background: var(--fmid);
       }
 
-      /* ── BIG APP TYPE BANNER ── */
-      .app-banner {
-        position: fixed;
-        top: 64px;
-        left: 0;
-        right: 0;
-        z-index: 800;
-        background: var(--amber);
-        padding: 0.6rem 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.2rem;
-      }
-      .ab-main {
-        font-family: "Source Sans 3", sans-serif;
-        font-size: 1rem;
-        font-weight: 800;
-        color: #fff;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-      .ab-main .ab-icon {
-        font-size: 1.1rem;
-        margin-right: 0.3rem;
-      }
-      .ab-sep {
-        width: 1px;
-        height: 18px;
-        background: rgba(255, 255, 255, 0.35);
-      }
-      .ab-sub {
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.85);
-        letter-spacing: 0.02em;
-      }
-      .ab-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        background: rgba(255, 255, 255, 0.18);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 999px;
-        padding: 0.22rem 0.8rem;
-        font-size: 0.72rem;
-        font-weight: 700;
-        color: #fff;
-        letter-spacing: 0.03em;
-      }
-
       /* HERO */
       .hero {
         min-height: 100vh;
-        padding-top: calc(64px + 44px);
+        padding-top: 64px;
         display: flex;
         flex-direction: column;
         position: relative;
@@ -280,7 +215,7 @@
         line-height: 1.85;
         color: var(--tbody);
         max-width: 500px;
-        margin-bottom: 2.4rem;
+        margin-bottom: 2rem;
         animation: fadeUp 0.6s 0.2s ease both;
       }
       .hero-sub strong {
@@ -288,46 +223,94 @@
         font-weight: 600;
       }
 
-      .hero-actions {
+      .hero-trial-note {
+        font-size: 0.88rem;
+        color: var(--tbody);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        max-width: 460px;
+        animation: fadeUp 0.6s 0.25s ease both;
+      }
+      .hero-trial-note strong {
+        color: var(--forest);
+        font-weight: 700;
+      }
+
+      /* HERO FORM */
+      .hero-form {
         display: flex;
-        gap: 1rem;
-        align-items: center;
-        margin-bottom: 1.8rem;
+        gap: 0.75rem;
+        max-width: 460px;
+        margin-bottom: 1.4rem;
         animation: fadeUp 0.6s 0.3s ease both;
       }
-      .btn-primary {
+      .hero-input {
+        flex: 1;
+        padding: 0.9rem 1.1rem;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        font-family: "Source Sans 3", sans-serif;
+        font-size: 0.9rem;
+        color: var(--text);
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .hero-input::placeholder {
+        color: var(--tlight);
+      }
+      .hero-input:focus {
+        border-color: var(--fmid);
+      }
+      .hero-submit {
         background: var(--forest);
         color: var(--bg);
         border: none;
-        padding: 0.95rem 2rem;
+        padding: 0.9rem 1.4rem;
         font-family: "Source Sans 3", sans-serif;
-        font-size: 0.92rem;
-        font-weight: 600;
-        cursor: pointer;
+        font-size: 0.87rem;
+        font-weight: 700;
         border-radius: 10px;
-        transition: all 0.25s;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s;
       }
-      .btn-primary:hover {
+      .hero-submit:hover {
         background: var(--fmid);
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         box-shadow: 0 10px 30px var(--fglow);
       }
-      .btn-ghost {
-        background: transparent;
-        color: var(--tmuted);
-        border: 1.5px solid var(--border);
-        padding: 0.95rem 1.6rem;
-        font-family: "Source Sans 3", sans-serif;
-        font-size: 0.92rem;
-        font-weight: 500;
-        cursor: pointer;
-        border-radius: 10px;
-        transition: all 0.25s;
+      .hero-fine {
+        font-size: 0.82rem;
+        color: var(--tbody);
+        margin-bottom: 2rem;
+        animation: fadeUp 0.6s 0.35s ease both;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        flex-wrap: wrap;
       }
-      .btn-ghost:hover {
-        color: var(--forest);
-        border-color: var(--fmid);
-        background: var(--fpale);
+      .hero-fine .spots {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: var(--hpale);
+        border: 1px solid var(--hglow);
+        color: var(--amber);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+      }
+      .hero-fine .dot-sep {
+        color: var(--tlight);
+        font-size: 0.5rem;
+      }
+      .hero-fine .perk {
+        font-weight: 500;
+        color: var(--tmuted);
+        font-size: 0.78rem;
       }
 
       .store-badges {
@@ -599,7 +582,6 @@
       .pfixed {
         background: var(--hpale);
         border: 1px solid var(--hglow);
-        border-left: 3px solid var(--amber);
         border-radius: 11px;
         padding: 0.55rem 0.7rem;
         flex-shrink: 0;
@@ -617,45 +599,6 @@
         font-size: 0.64rem;
         color: var(--amber);
         font-weight: 500;
-      }
-
-      /* TICKER */
-      .ticker {
-        overflow: hidden;
-        padding: 0.9rem 0;
-        border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-        background: var(--bg-warm);
-        margin-top: auto;
-      }
-      .ticker-inner {
-        display: flex;
-        animation: tick 32s linear infinite;
-        white-space: nowrap;
-      }
-      @keyframes tick {
-        from {
-          transform: translateX(0);
-        }
-        to {
-          transform: translateX(-50%);
-        }
-      }
-      .ti {
-        display: inline-flex;
-        align-items: center;
-        padding: 0 1.8rem;
-        font-size: 0.72rem;
-        letter-spacing: 0.05em;
-        color: var(--tmuted);
-        font-weight: 500;
-        text-transform: uppercase;
-        white-space: nowrap;
-      }
-      .sep {
-        color: var(--honey);
-        margin-left: 1.8rem;
-        font-size: 0.45rem;
       }
 
       @keyframes fadeUp {
@@ -697,90 +640,17 @@
         font-style: italic;
         color: var(--amber);
       }
-      .lead {
-        font-size: 1rem;
-        line-height: 1.85;
-        color: var(--tbody);
-        margin-bottom: 1.2rem;
-        max-width: 500px;
-      }
 
-      /* PROBLEM */
-      .problem-section {
-        padding: 6rem 0;
-        background: var(--bg);
-      }
-      .pgrid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 5rem;
-        align-items: start;
-      }
-      .plist {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 1.1rem;
-        margin-bottom: 2.2rem;
-      }
-      .plist li {
-        display: flex;
-        gap: 1.1rem;
-        align-items: flex-start;
-        font-size: 0.94rem;
-        color: var(--tbody);
-        line-height: 1.6;
-      }
-      .num {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.68rem;
-        color: var(--amber);
-        font-weight: 500;
-        padding-top: 0.15rem;
-        min-width: 22px;
-      }
-      .qblock {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 1.4rem 1.6rem;
-      }
-      .qblock blockquote {
-        font-family: "Libre Baskerville", serif;
-        font-size: 0.97rem;
-        line-height: 1.7;
-        color: var(--text);
-        font-style: italic;
-        margin-bottom: 0.7rem;
-      }
-      .qmeta {
-        font-size: 0.76rem;
-        color: var(--tlight);
-        font-weight: 500;
-      }
-
-      /* HOW */
-      .how-section {
+      /* THREE PILLARS */
+      .pillars-section {
         padding: 6rem 0;
         background: var(--bg-warm);
-      }
-      .how-header {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: end;
-        margin-bottom: 3.5rem;
-      }
-      .section-desc {
-        font-size: 0.97rem;
-        line-height: 1.85;
-        color: var(--tbody);
-        max-width: 400px;
       }
       .fgrid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1.4rem;
+        margin-top: 2.2rem;
       }
       .fitem {
         background: var(--surface);
@@ -816,71 +686,6 @@
         font-size: 0.9rem;
         line-height: 1.75;
         color: var(--tbody);
-      }
-
-      /* MECHANIC */
-      .mech-section {
-        padding: 6rem 0;
-        background: var(--bg);
-        text-align: center;
-      }
-      .mech-section .section-label {
-        color: var(--honey);
-      }
-      .mech-section h2 {
-        color: var(--forest);
-      }
-      .mech-section h2 em {
-        color: var(--honey);
-      }
-      .mgrid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.8rem;
-        margin-top: 2.8rem;
-      }
-      .mcard {
-        border-radius: 16px;
-        padding: 1.8rem;
-        text-align: left;
-      }
-      .mcard.good {
-        background: var(--fpale);
-        border: 1px solid rgba(27, 67, 50, 0.12);
-      }
-      .mcard.bad {
-        background: var(--fpale);
-        border: 1px solid rgba(27, 67, 50, 0.12);
-      }
-      .mcard .micon {
-        font-size: 1.7rem;
-        margin-bottom: 0.75rem;
-      }
-      .mcard h4 {
-        font-family: "Libre Baskerville", serif;
-        font-size: 1.05rem;
-        font-weight: 400;
-        color: var(--forest);
-        line-height: 1.35;
-        margin-bottom: 0.65rem;
-      }
-      .mcard p {
-        font-size: 0.87rem;
-        line-height: 1.7;
-        color: var(--tbody);
-      }
-      .mnote {
-        background: var(--fpale);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 1.4rem 1.8rem;
-        font-size: 0.92rem;
-        line-height: 1.7;
-        color: var(--tbody);
-        text-align: left;
-      }
-      .mnote strong {
-        color: var(--forest);
       }
 
       /* COMPARE */
@@ -967,7 +772,6 @@
         max-width: 680px;
         margin: 0 auto;
       }
-
       .pcrd {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -1128,7 +932,7 @@
         display: flex;
         justify-content: center;
       }
-      .cta-section > .container > p {
+      .cta-sub {
         font-size: 0.97rem;
         line-height: 1.8;
         color: var(--tbody);
@@ -1208,18 +1012,19 @@
         color: rgba(255, 255, 255, 0.38);
         margin-top: 0.9rem;
       }
+      .cta-pricing {
+        font-size: 0.82rem;
+        color: var(--tmuted);
+        margin-top: 2rem;
+      }
 
       /* FOOTER */
       footer {
         padding: 2.5rem 4rem;
         border-top: 1px solid var(--border);
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-      }
-      footer p {
-        font-size: 0.8rem;
-        color: var(--tlight);
       }
 
       /* RESPONSIVE */
@@ -1234,25 +1039,13 @@
         nav {
           padding: 0 1.5rem;
         }
-        .nav-link {
-          display: none;
-        }
-        .app-banner {
-          padding: 0.6rem 1.5rem;
-          flex-wrap: wrap;
-          gap: 0.6rem;
-          font-size: 0.85rem;
-        }
         .container {
           padding: 0 1.5rem;
         }
-        .pgrid,
-        .how-header,
-        .mgrid,
         .fgrid,
         .pricegrid {
           grid-template-columns: 1fr;
-          gap: 2rem;
+          gap: 1.2rem;
         }
         footer {
           flex-direction: column;
@@ -1260,12 +1053,20 @@
           text-align: center;
           padding: 2rem 1.5rem;
         }
-        .cform {
+        .cform,
+        .hero-form {
           flex-direction: column;
         }
         .ebbox {
           padding: 2rem 1.5rem;
           margin: 0 1rem;
+        }
+        .ctable {
+          font-size: 0.78rem;
+        }
+        .ctable th,
+        .ctable td {
+          padding: 0.7rem 0.6rem;
         }
       }
     </style>
@@ -1274,47 +1075,17 @@
     <!-- NAV -->
     <nav>
       <div class="logo">Spend<span class="dot">ly</span></div>
-      <div class="nav-right">
-        <a href="#how" class="nav-link">How it works</a>
-        <a href="#pricing" class="nav-link">Pricing</a>
-        <a href="#compare" class="nav-link">vs YNAB</a>
-        <button
-          class="nav-btn"
-          onclick="
-            document
-              .querySelector('.cta-section')
-              .scrollIntoView({ behavior: 'smooth' })
-          "
-        >
-          Get early access
-        </button>
-      </div>
+      <button
+        class="nav-btn"
+        onclick="
+          document
+            .getElementById('hero-form')
+            .scrollIntoView({ behavior: 'smooth' })
+        "
+      >
+        Get early access
+      </button>
     </nav>
-
-    <!-- TOP BANNER — big, amber, unmissable -->
-    <div class="app-banner">
-      <div class="ab-main"><span class="ab-icon">📱</span>BUDGETING APP</div>
-      <div class="ab-sep"></div>
-      <div class="ab-sub">
-        Mobile app for iOS & Android — currently in development
-      </div>
-      <div class="ab-pill">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
-          <path
-            d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"
-          />
-        </svg>
-        App Store
-      </div>
-      <div class="ab-pill">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
-          <path
-            d="M3.18 23.76c.3.17.64.22.99.15l12.6-12.6-3.03-3.04L3.18 23.76zm16.4-12.75c.35-.31.57-.75.57-1.26 0-.51-.22-.95-.57-1.26l-2.1-1.21-3.35 3.35 3.35 3.35 2.1-1.21v.24zM1.18 1.15C1.07 1.38 1 1.65 1 1.97v19.86c0 .33.07.6.19.83l.09.09 11.12-11.12v-.26L1.27 1.06l-.09.09zm7.58 12.47L4.71 17.67l-1.53-1.44V7.79l1.53-1.44 4.05 4.05-3.1 3.22z"
-          />
-        </svg>
-        Google Play
-      </div>
-    </div>
 
     <!-- HERO -->
     <section class="hero">
@@ -1342,28 +1113,36 @@
             No monthly resets. No pretending last week didn't happen.
           </p>
 
-          <div class="hero-actions">
-            <button
-              class="btn-primary"
-              onclick="
-                document
-                  .querySelector('.cta-section')
-                  .scrollIntoView({ behavior: 'smooth' })
-              "
-            >
+          <p class="hero-trial-note">
+            Join the waitlist today and your free trial extends to
+            <strong>30 full days</strong> — 4× longer than standard.
+          </p>
+
+          <form
+            class="hero-form"
+            id="hero-form"
+            action="https://submit-form.com/EFyypuWyw"
+            method="POST"
+          >
+            <input type="hidden" name="_redirect" value="false" />
+            <input
+              class="hero-input"
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              required
+            />
+            <button class="hero-submit" type="submit">
               Get early access →
             </button>
-            <button
-              class="btn-ghost"
-              onclick="
-                document
-                  .querySelector('#how')
-                  .scrollIntoView({ behavior: 'smooth' })
-              "
-            >
-              How it works
-            </button>
-          </div>
+          </form>
+          <p class="hero-fine" id="hero-form-msg">
+            <span class="spots">🔥 213 of 300 spots claimed</span>
+            <span class="dot-sep">◆</span>
+            <span class="perk">30-day free trial</span>
+            <span class="dot-sep">◆</span>
+            <span class="perk">No card required</span>
+          </p>
 
           <div class="store-badges">
             <div class="sbadge">
@@ -1446,129 +1225,15 @@
           </div>
         </div>
       </div>
-
-      <div class="ticker">
-        <div class="ticker-inner">
-          <span class="ti"
-            >📱 Budgeting app for iOS & Android<span class="sep">◆</span></span
-          >
-          <span class="ti"
-            >Rollover works both ways<span class="sep">◆</span></span
-          >
-          <span class="ti"
-            >Fixed expenses always protected<span class="sep">◆</span></span
-          >
-          <span class="ti"
-            >No monthly resets ever<span class="sep">◆</span></span
-          >
-          <span class="ti">7-day free trial<span class="sep">◆</span></span>
-          <span class="ti"
-            >30-day trial for early access<span class="sep">◆</span></span
-          >
-          <span class="ti"
-            >Weekend mode built in<span class="sep">◆</span></span
-          >
-          <span class="ti"
-            >📱 Budgeting app for iOS & Android<span class="sep">◆</span></span
-          >
-          <span class="ti"
-            >Rollover works both ways<span class="sep">◆</span></span
-          >
-          <span class="ti"
-            >Fixed expenses always protected<span class="sep">◆</span></span
-          >
-          <span class="ti"
-            >No monthly resets ever<span class="sep">◆</span></span
-          >
-          <span class="ti">7-day free trial<span class="sep">◆</span></span>
-          <span class="ti"
-            >30-day trial for early access<span class="sep">◆</span></span
-          >
-          <span class="ti"
-            >Weekend mode built in<span class="sep">◆</span></span
-          >
-        </div>
-      </div>
-    </section>
-
-    <!-- PROBLEM -->
-    <section class="problem-section">
-      <div class="container">
-        <div class="pgrid">
-          <div>
-            <div class="section-label">The problem</div>
-            <h2>You never actually know what you can <em>spend today.</em></h2>
-            <p class="lead">
-              You have rent due, a loan payment, subscriptions, and groceries —
-              and at 7pm you're in a store doing mental math, still not sure if
-              you can afford this.
-            </p>
-            <p class="lead">
-              Monthly apps give you one big number for the month. They don't
-              tell you what's safe today. And when the month resets, every good
-              day and bad day disappears.
-            </p>
-          </div>
-          <div>
-            <ul class="plist">
-              <li>
-                <span class="num">01</span
-                ><span
-                  >Your monthly budget doesn't tell you what's safe to spend on
-                  a random Wednesday</span
-                >
-              </li>
-              <li>
-                <span class="num">02</span
-                ><span
-                  >Frugal days evaporate — savings don't carry into tomorrow,
-                  they vanish into the monthly pool</span
-                >
-              </li>
-              <li>
-                <span class="num">03</span
-                ><span
-                  >Fixed expenses mix with daily spending, making every number
-                  feel unreliable</span
-                >
-              </li>
-              <li>
-                <span class="num">04</span
-                ><span
-                  >One overspend and the whole system loses credibility — until
-                  the 1st rolls around again</span
-                >
-              </li>
-            </ul>
-            <div class="qblock">
-              <blockquote>
-                "I know roughly what I earn and what my bills are — but I
-                genuinely don't know what I can spend today without messing up
-                next week."
-              </blockquote>
-              <div class="qmeta">The person Spendly was built for</div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- HOW IT WORKS -->
-    <section class="how-section" id="how">
+    <section class="pillars-section" id="how">
       <div class="container">
-        <div class="how-header">
-          <div>
-            <div class="section-label">The mechanic</div>
-            <h2>
-              Good days build up.<br /><em>Bad days cost you tomorrow.</em>
-            </h2>
-          </div>
-          <p class="section-desc">
-            Three ideas that make your daily number trustworthy. Fixed expenses
-            are completely separate — what rolls forward is only what's
-            genuinely yours to spend.
-          </p>
-        </div>
+        <div class="section-label">The mechanic</div>
+        <h2>
+          Good days build up.<br /><em>Bad days cost you tomorrow.</em>
+        </h2>
         <div class="fgrid">
           <div class="fitem">
             <div class="fnum">01 · Core mechanic</div>
@@ -1598,38 +1263,6 @@
               more than your Tuesdays, your budget should reflect that — not
               punish you for it.
             </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MECHANIC -->
-    <section class="mech-section">
-      <div class="container">
-        <div class="section-label">How the rollover really works</div>
-        <h2>The math is honest.<br /><em>In both directions.</em></h2>
-        <div class="mgrid">
-          <div class="mcard good">
-            <div class="micon">↑</div>
-            <h4>You spend $50 on a $72 daily budget.</h4>
-            <p>
-              You saved $22. Tomorrow starts at $72 + $22 = $94. No ceremony, no
-              transfers. It just happens automatically.
-            </p>
-          </div>
-          <div class="mcard bad">
-            <div class="micon">↓</div>
-            <h4>You spend $95 on a $72 daily budget.</h4>
-            <p>
-              You overspent $23. Tomorrow starts at $72 − $23 = $49. The math is
-              honest. No reset button. That's exactly the point.
-            </p>
-          </div>
-          <div class="mnote">
-            <strong>This is different from every other budgeting app.</strong>
-            Most apps let a bad week disappear on the 1st of the month. Spendly
-            doesn't offer that escape — but every good day is genuinely
-            rewarded, not quietly absorbed into a pool that resets anyway.
           </div>
         </div>
       </div>
@@ -1731,10 +1364,10 @@
             </button>
           </div>
           <div class="pcrd feat">
-            <div class="pbdg">Best value · Save $14/year</div>
+            <div class="pbdg">Best value · Save $29/year</div>
             <div class="pplan">Pro · Annual</div>
             <div class="pprice">$79</div>
-            <div class="pperiod">per year · $2.83/month</div>
+            <div class="pperiod">per year · $6.58/month</div>
             <div class="ptrial">🕐 7-day free trial</div>
             <ul class="pfeats">
               <li>Everything in monthly</li>
@@ -1768,7 +1401,7 @@
       <div class="container">
         <div class="section-label">Early access</div>
         <h2>Your quiet Tuesday<br />funds your <em>big Friday.</em></h2>
-        <p>
+        <p class="cta-sub">
           First when we launch on iOS & Android. Leave your email and get 30
           days free — 4× the normal trial.
         </p>
@@ -1784,7 +1417,7 @@
           </div>
           <form
             class="cform"
-            id="waitlist-form"
+            id="cta-form"
             action="https://submit-form.com/EFyypuWyw"
             method="POST"
           >
@@ -1798,8 +1431,8 @@
             />
             <button class="csubmit" type="submit">Claim 30-day trial →</button>
           </form>
-          <p class="cfine" id="form-msg">
-            No credit card · No spam · Cancel anytime · iOS & Android
+          <p class="cfine" id="cta-form-msg">
+            213 of 300 early access spots claimed
           </p>
         </div>
       </div>
@@ -1807,23 +1440,23 @@
 
     <footer>
       <div class="logo">Spend<span class="dot">ly</span></div>
-      <p>
-        Built by someone who couldn't find this app anywhere — so they made it.
-      </p>
     </footer>
     <script>
-      document
-        .getElementById("waitlist-form")
-        .addEventListener("submit", async function (e) {
+      document.querySelectorAll("#hero-form, #cta-form").forEach(function (form) {
+        form.addEventListener("submit", async function (e) {
           e.preventDefault();
-          const form = this,
-            btn = form.querySelector(".csubmit"),
-            msg = document.getElementById("form-msg"),
-            email = form.querySelector('input[name="email"]');
+          var isHero = this.id === "hero-form";
+          var btn = isHero
+            ? this.querySelector(".hero-submit")
+            : this.querySelector(".csubmit");
+          var msg = document.getElementById(
+            isHero ? "hero-form-msg" : "cta-form-msg",
+          );
+          var email = this.querySelector('input[name="email"]');
           btn.disabled = true;
           btn.textContent = "Sending...";
           try {
-            const res = await fetch("https://submit-form.com/EFyypuWyw", {
+            var res = await fetch("https://submit-form.com/EFyypuWyw", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -1834,23 +1467,28 @@
             if (res.ok) {
               msg.textContent =
                 "You're in! We'll email you when Spendly launches.";
-              msg.style.color = "#40916C";
+              msg.style.color = isHero ? "#40916C" : "rgba(64,145,108,0.9)";
               fbq("track", "Lead");
               email.value = "";
-              btn.textContent = "You're on the list \u2713";
+              btn.textContent = "You're on the list ✓";
             } else {
               msg.textContent = "Something went wrong. Please try again.";
-              msg.style.color = "#D4654A";
-              btn.textContent = "Claim 30-day trial →";
+              msg.style.color = isHero ? "#D4654A" : "rgba(212,101,74,0.9)";
+              btn.textContent = isHero
+                ? "Get early access →"
+                : "Claim 30-day trial →";
               btn.disabled = false;
             }
           } catch {
             msg.textContent = "Connection error. Please try again.";
-            msg.style.color = "#D4654A";
-            btn.textContent = "Claim 30-day trial →";
+            msg.style.color = isHero ? "#D4654A" : "rgba(212,101,74,0.9)";
+            btn.textContent = isHero
+              ? "Get early access →"
+              : "Claim 30-day trial →";
             btn.disabled = false;
           }
         });
+      });
     </script>
   </body>
 </html>
