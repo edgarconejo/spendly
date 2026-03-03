@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spendly — Budgeting App for iOS & Android</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FAF6F0;--bg-warm:#F4EDE3;--surface:#fff;
+  --forest:#1B4332;--fmid:#2D6A4F;--flight:#40916C;
+  --fpale:rgba(27,67,50,.06);--fglow:rgba(45,106,79,.13);
+  --amber:#C17817;--honey:#D4A34B;
+  --hpale:rgba(212,163,75,.10);--hglow:rgba(212,163,75,.22);
+  --coral:#D4654A;
+  --text:#1A1A1A;--tbody:#3D3D3D;--tmuted:#7A7567;--tlight:#A09889;
+  --border:rgba(27,67,50,.08);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;overflow-x:hidden;font-size:16px;line-height:1.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:0 3rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,246,240,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Libre Baskerville',serif;font-size:1.1rem;font-weight:700;color:var(--forest)}
+.logo .dot{color:var(--amber);font-style:italic;font-weight:400}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-link{font-size:.85rem;color:var(--tmuted);text-decoration:none;font-weight:500}
+.nav-link:hover{color:var(--forest)}
+.nav-btn{background:var(--forest);color:var(--bg);border:none;padding:.55rem 1.3rem;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;border-radius:8px;transition:all .2s}
+.nav-btn:hover{background:var(--fmid)}
+
+/* ── BIG APP TYPE BANNER ── */
+.app-banner{
+  position:fixed;top:64px;left:0;right:0;z-index:800;
+  background:var(--amber);
+  padding:.6rem 3rem;
+  display:flex;align-items:center;justify-content:center;gap:1.2rem;
+}
+.ab-main{
+  font-family:'Source Sans 3',sans-serif;
+  font-size:1rem;font-weight:800;
+  color:#fff;letter-spacing:.06em;text-transform:uppercase;
+}
+.ab-main .ab-icon{font-size:1.1rem;margin-right:.3rem}
+.ab-sep{width:1px;height:18px;background:rgba(255,255,255,.35)}
+.ab-sub{
+  font-size:.82rem;font-weight:600;color:rgba(255,255,255,.85);
+  letter-spacing:.02em;
+}
+.ab-pill{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);
+  border-radius:999px;padding:.22rem .8rem;
+  font-size:.72rem;font-weight:700;color:#fff;letter-spacing:.03em;
+}
+
+/* HERO */
+.hero{min-height:100vh;padding-top:calc(64px + 44px);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:580px;height:580px;background:radial-gradient(ellipse,rgba(212,163,75,.07) 0%,transparent 65%);pointer-events:none}
+
+.hero-inner{flex:1;display:grid;grid-template-columns:1fr 280px;gap:4rem;max-width:1120px;margin:0 auto;padding:4.5rem 4rem 3rem;width:100%;align-items:center}
+
+/* BIG in-page app type label */
+.hero-app-tag{
+  display:inline-flex;align-items:center;gap:.75rem;
+  background:var(--forest);color:#fff;
+  font-family:'Source Sans 3',sans-serif;
+  font-size:1rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  padding:.65rem 1.4rem;border-radius:12px;
+  margin-bottom:1.8rem;
+  animation:fadeUp .5s ease both;
+}
+.hat-icon{font-size:1.1rem}
+.hat-div{width:1px;height:16px;background:rgba(255,255,255,.28)}
+.hat-sub{font-size:.78rem;font-weight:600;color:var(--honey);letter-spacing:.03em;text-transform:none}
+
+h1{font-family:'Libre Baskerville',serif;font-size:clamp(2.6rem,4.2vw,4.6rem);line-height:1.1;letter-spacing:-.025em;font-weight:400;color:var(--forest);margin-bottom:1.8rem;animation:fadeUp .6s .1s ease both}
+h1 em{color:var(--amber);font-style:italic}
+
+.hero-sub{font-size:1.05rem;line-height:1.85;color:var(--tbody);max-width:500px;margin-bottom:2.4rem;animation:fadeUp .6s .2s ease both}
+.hero-sub strong{color:var(--forest);font-weight:600}
+
+.hero-actions{display:flex;gap:1rem;align-items:center;margin-bottom:1.8rem;animation:fadeUp .6s .3s ease both}
+.btn-primary{background:var(--forest);color:var(--bg);border:none;padding:.95rem 2rem;font-family:'Source Sans 3',sans-serif;font-size:.92rem;font-weight:600;cursor:pointer;border-radius:10px;transition:all .25s}
+.btn-primary:hover{background:var(--fmid);transform:translateY(-2px);box-shadow:0 10px 30px var(--fglow)}
+.btn-ghost{background:transparent;color:var(--tmuted);border:1.5px solid var(--border);padding:.95rem 1.6rem;font-family:'Source Sans 3',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;border-radius:10px;transition:all .25s}
+.btn-ghost:hover{color:var(--forest);border-color:var(--fmid);background:var(--fpale)}
+
+.store-badges{display:flex;gap:.75rem;animation:fadeUp .6s .4s ease both}
+.sbadge{display:inline-flex;align-items:center;gap:.55rem;background:#1a1a1a;color:#fff;border-radius:9px;padding:.45rem .9rem;position:relative;cursor:default}
+.sbadge-tag{position:absolute;top:-9px;right:-6px;background:var(--amber);color:#fff;font-size:.5rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .45rem;border-radius:999px;white-space:nowrap}
+.sbadge svg{width:17px;height:17px;fill:#fff;flex-shrink:0}
+.sbt{font-size:.56rem;color:rgba(255,255,255,.6);line-height:1.1}
+.sbb{font-size:.8rem;font-weight:700;line-height:1.2}
+
+/* ── PHONE — natural proportions ── */
+.mockup-wrap{position:relative;display:flex;justify-content:center;align-items:center;animation:fadeUp .8s .15s ease both}
+.mockup-glow{position:absolute;inset:-50px;background:radial-gradient(ellipse at 50% 50%,rgba(45,106,79,.14) 0%,transparent 68%);pointer-events:none}
+
+.phone{
+  /* 390×844 logical px → ratio 0.462. We use 252×546 */
+  width:252px;
+  height:546px;
+  background:#111;
+  border-radius:46px;
+  padding:9px;
+  box-shadow:
+    inset 0 0 0 .5px rgba(255,255,255,.08),
+    0 2px 4px rgba(0,0,0,.4),
+    0 20px 60px rgba(0,0,0,.28),
+    0 40px 90px rgba(27,67,50,.14);
+  position:relative;flex-shrink:0;
+}
+/* volume buttons */
+.phone::before{content:'';position:absolute;left:-3px;top:76px;width:3px;height:28px;background:#222;border-radius:2px 0 0 2px;box-shadow:0 40px 0 #222,0 72px 0 #222}
+/* power */
+.phone::after{content:'';position:absolute;right:-3px;top:96px;width:3px;height:48px;background:#222;border-radius:0 2px 2px 0}
+
+.phone-inner{background:var(--bg);border-radius:38px;height:100%;overflow:hidden;display:flex;flex-direction:column}
+
+/* dynamic island */
+.di{width:80px;height:24px;background:#111;border-radius:999px;margin:8px auto 0;flex-shrink:0}
+
+.pscreen{padding:.5rem .85rem .7rem;display:flex;flex-direction:column;gap:.48rem;overflow:hidden;flex:1}
+
+.pstatus{display:flex;justify-content:space-between;font-size:.58rem;font-weight:700;color:var(--text);padding-bottom:.1rem}
+.psr{display:flex;gap:.3rem;font-size:.55rem}
+
+.phead{text-align:center}
+.pname{font-family:'Libre Baskerville',serif;font-size:.82rem;color:var(--forest);font-weight:700}
+.pdate{font-size:.54rem;color:var(--tlight);text-transform:uppercase;letter-spacing:.09em}
+
+.pbal{background:var(--forest);border-radius:18px;padding:.85rem .9rem;text-align:center;flex-shrink:0}
+.pbl{font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.25rem;font-weight:600}
+.pba{font-family:'JetBrains Mono',monospace;font-size:1.95rem;line-height:1;color:#fff;margin-bottom:.4rem;font-weight:500}
+.pbp{display:inline-flex;align-items:center;background:rgba(212,163,75,.22);border:1px solid rgba(212,163,75,.38);color:#D4A34B;font-family:'JetBrains Mono',monospace;font-size:.53rem;padding:.18rem .55rem;border-radius:999px}
+
+.pmetrics{background:var(--surface);border-radius:13px;padding:.6rem .75rem;border:1px solid var(--border);flex-shrink:0}
+.pmrow{display:flex;justify-content:space-between;align-items:center;padding:.3rem 0}
+.pmrow+.pmrow{border-top:1px solid var(--border)}
+.pmk{font-size:.54rem;color:var(--tlight);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.pmv{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text);font-weight:500}
+.pmv.g{color:var(--fmid)}
+
+.pbar{padding-top:.38rem}
+.pbt{height:4px;background:var(--bg-warm);border-radius:999px;overflow:hidden;margin-bottom:.26rem}
+.pbf{height:100%;width:38%;background:linear-gradient(90deg,var(--flight),var(--forest));border-radius:999px;animation:barGrow 1.4s .8s ease both}
+@keyframes barGrow{from{width:0}to{width:38%}}
+.pbl2{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.49rem;color:var(--tlight)}
+
+.pfixed{background:var(--hpale);border:1px solid var(--hglow);border-left:3px solid var(--amber);border-radius:11px;padding:.55rem .7rem;flex-shrink:0}
+.pfl{font-size:.53rem;text-transform:uppercase;letter-spacing:.07em;color:var(--tmuted);font-weight:600;margin-bottom:.1rem}
+.pfv{font-family:'JetBrains Mono',monospace;font-size:.64rem;color:var(--amber);font-weight:500}
+
+/* TICKER */
+.ticker{overflow:hidden;padding:.9rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-warm);margin-top:auto}
+.ticker-inner{display:flex;animation:tick 32s linear infinite;white-space:nowrap}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ti{display:inline-flex;align-items:center;padding:0 1.8rem;font-size:.72rem;letter-spacing:.05em;color:var(--tmuted);font-weight:500;text-transform:uppercase;white-space:nowrap}
+.sep{color:var(--honey);margin-left:1.8rem;font-size:.45rem}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* SHARED */
+.container{max-width:1060px;margin:0 auto;padding:0 4rem}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;font-weight:500}
+h2{font-family:'Libre Baskerville',serif;font-size:clamp(1.9rem,3.2vw,2.8rem);line-height:1.15;letter-spacing:-.02em;font-weight:400;color:var(--forest);margin-bottom:1.5rem}
+h2 em{font-style:italic;color:var(--amber)}
+.lead{font-size:1rem;line-height:1.85;color:var(--tbody);margin-bottom:1.2rem;max-width:500px}
+
+/* PROBLEM */
+.problem-section{padding:6rem 0;background:var(--bg)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.plist{list-style:none;display:flex;flex-direction:column;gap:1.1rem;margin-bottom:2.2rem}
+.plist li{display:flex;gap:1.1rem;align-items:flex-start;font-size:.94rem;color:var(--tbody);line-height:1.6}
+.num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--amber);font-weight:500;padding-top:.15rem;min-width:22px}
+.qblock{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:12px;padding:1.4rem 1.6rem}
+.qblock blockquote{font-family:'Libre Baskerville',serif;font-size:.97rem;line-height:1.7;color:var(--text);font-style:italic;margin-bottom:.7rem}
+.qmeta{font-size:.76rem;color:var(--tlight);font-weight:500}
+
+/* HOW */
+.how-section{padding:6rem 0;background:var(--bg-warm)}
+.how-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:3.5rem}
+.section-desc{font-size:.97rem;line-height:1.85;color:var(--tbody);max-width:400px}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.fitem{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.8rem;transition:box-shadow .25s}
+.fitem:hover{box-shadow:0 8px 30px var(--fglow)}
+.fnum{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--amber);text-transform:uppercase;margin-bottom:.9rem}
+.fitem h3{font-family:'Libre Baskerville',serif;font-size:1.3rem;line-height:1.2;font-weight:400;color:var(--forest);margin-bottom:.75rem}
+.fitem h3 em{color:var(--amber);font-style:italic}
+.fitem p{font-size:.9rem;line-height:1.75;color:var(--tbody)}
+
+/* MECHANIC */
+.mech-section{padding:6rem 0;background:var(--bg);text-align:center}
+.mech-section .section-label{color:var(--honey)}
+.mech-section h2{color:var(--forest)}
+.mech-section h2 em{color:var(--honey)}
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;margin-top:2.8rem}
+.mcard{border-radius:16px;padding:1.8rem;text-align:left}
+.mcard.good{background:var(--fpale);border:1px solid rgba(27,67,50,.12)}
+.mcard.bad{background:var(--fpale);border:1px solid rgba(27,67,50,.12)}
+.mcard .micon{font-size:1.7rem;margin-bottom:.75rem}
+.mcard h4{font-family:'Libre Baskerville',serif;font-size:1.05rem;font-weight:400;color:var(--forest);line-height:1.35;margin-bottom:.65rem}
+.mcard p{font-size:.87rem;line-height:1.7;color:var(--tbody)}
+.mnote{background:var(--fpale);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1.8rem;font-size:.92rem;line-height:1.7;color:var(--tbody);text-align:left}
+.mnote strong{color:var(--forest)}
+
+/* COMPARE */.cmp-section{padding:6rem 0;background:var(--bg)}
+.ctable{width:100%;border-collapse:collapse;margin-top:2.2rem;font-size:.88rem}
+.ctable th{font-weight:600;font-size:.75rem;letter-spacing:.04em;text-transform:uppercase;padding:.9rem 1.1rem;border-bottom:2px solid var(--border);color:var(--tmuted);text-align:left}
+.ctable th.hl{background:var(--fpale);color:var(--forest)}
+.ctable td{padding:.9rem 1.1rem;border-bottom:1px solid var(--border);color:var(--tbody);vertical-align:middle}
+.ctable td.feat{color:var(--text);font-weight:500}
+.ctable td.hl{background:var(--fpale);font-weight:600;color:var(--forest)}
+.ctable tr:last-child td{border-bottom:none}
+.chk{color:var(--fmid);font-weight:700;margin-right:.3rem}
+.xmk{color:var(--coral);font-weight:700;margin-right:.3rem}
+.dsh{color:var(--tlight)}
+
+/* PRICING */
+.price-section{padding:6rem 0;background:var(--bg-warm)}
+.price-header{text-align:center;max-width:500px;margin:0 auto 3.5rem}
+.price-header .section-label{display:flex;justify-content:center}
+.price-header p{font-size:.97rem;line-height:1.8;color:var(--tbody);margin-top:.9rem}
+.pricegrid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:680px;margin:0 auto}
+
+.pcrd{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:2.2rem;position:relative;transition:box-shadow .25s}
+.pcrd:hover{box-shadow:0 12px 40px var(--fglow)}
+.pcrd.feat{background:var(--forest);border-color:var(--forest);box-shadow:0 20px 60px var(--fglow)}
+.pbdg{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--amber);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .9rem;border-radius:999px;white-space:nowrap;font-weight:600}
+.pplan{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:.75rem}
+.pcrd.feat .pplan{color:var(--honey)}
+.pprice{font-family:'Libre Baskerville',serif;font-size:3rem;font-weight:400;color:var(--forest);line-height:1;letter-spacing:-.03em;margin-bottom:.25rem}
+.pcrd.feat .pprice{color:#fff}
+.pperiod{font-size:.83rem;color:var(--tmuted);margin-bottom:.65rem}
+.pcrd.feat .pperiod{color:rgba(255,255,255,.48)}
+.ptrial{display:inline-flex;align-items:center;gap:.35rem;background:var(--hpale);border:1px solid var(--hglow);color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.28rem .7rem;border-radius:999px;margin-bottom:1.7rem;font-weight:600}
+.pcrd.feat .ptrial{background:rgba(212,163,75,.18);border-color:rgba(212,163,75,.32);color:var(--honey)}
+.pfeats{list-style:none;display:flex;flex-direction:column;gap:.68rem;margin-bottom:2rem}
+.pfeats li{display:flex;align-items:flex-start;gap:.55rem;font-size:.87rem;color:var(--tbody);line-height:1.5}
+.pcrd.feat .pfeats li{color:rgba(255,255,255,.82)}
+.pfeats li::before{content:'✓';color:var(--fmid);font-weight:700;font-size:.83rem;min-width:15px}
+.pcrd.feat .pfeats li::before{color:var(--honey)}
+.pbutton{width:100%;padding:.93rem;border-radius:11px;font-family:'Source Sans 3',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .25s;border:none}
+.pbutton.outline{background:transparent;border:1.5px solid var(--border);color:var(--forest)}
+.pbutton.outline:hover{border-color:var(--fmid);background:var(--fpale)}
+.pbutton.solid{background:var(--honey);color:var(--forest)}
+.pbutton.solid:hover{background:#ddb040;transform:translateY(-1px)}
+.trial-note{text-align:center;margin-top:2.2rem;font-size:.85rem;color:var(--tmuted);line-height:1.8}
+.trial-note strong{color:var(--forest)}
+
+/* CTA */
+.cta-section{padding:7rem 0;background:var(--bg);text-align:center}
+.cta-section .section-label{display:flex;justify-content:center}
+.cta-section>.container>p{font-size:.97rem;line-height:1.8;color:var(--tbody);max-width:440px;margin:0 auto 2.5rem}
+.ebbox{background:var(--forest);border-radius:22px;padding:2.8rem 3rem;max-width:500px;margin:0 auto}
+.eblbl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--honey);margin-bottom:.75rem}
+.ebhead{font-family:'Libre Baskerville',serif;font-size:1.55rem;font-weight:400;color:#fff;line-height:1.3;margin-bottom:.55rem}
+.ebsub{font-size:.87rem;color:rgba(255,255,255,.58);line-height:1.7;margin-bottom:1.8rem}
+.cform{display:flex;gap:.75rem}
+.cinput{flex:1;padding:.9rem 1.1rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;font-family:'Source Sans 3',sans-serif;font-size:.87rem;color:#fff;outline:none;transition:border-color .2s}
+.cinput::placeholder{color:rgba(255,255,255,.32)}
+.cinput:focus{border-color:var(--honey)}
+.csubmit{background:var(--honey);color:var(--forest);border:none;padding:.9rem 1.4rem;font-family:'Source Sans 3',sans-serif;font-size:.87rem;font-weight:700;border-radius:10px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.csubmit:hover{background:#ddb040;transform:translateY(-1px)}
+.cfine{font-size:.72rem;color:rgba(255,255,255,.38);margin-top:.9rem}
+
+/* FOOTER */
+footer{padding:2.5rem 4rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+footer p{font-size:.8rem;color:var(--tlight)}
+
+/* RESPONSIVE */
+@media(max-width:940px){
+  .hero-inner{grid-template-columns:1fr;padding:3rem 2rem}
+  .mockup-wrap{display:none}
+  nav{padding:0 1.5rem}
+  .nav-link{display:none}
+  .app-banner{padding:.6rem 1.5rem;flex-wrap:wrap;gap:.6rem;font-size:.85rem}
+  .container{padding:0 1.5rem}
+  .pgrid,.how-header,.mgrid,.fgrid,.pricegrid{grid-template-columns:1fr;gap:2rem}
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.5rem}
+  .cform{flex-direction:column}
+  .ebbox{padding:2rem 1.5rem;margin:0 1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Spend<span class="dot">ly</span></div>
+  <div class="nav-right">
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#compare" class="nav-link">vs YNAB</a>
+    <button class="nav-btn" onclick="document.querySelector('.cta-section').scrollIntoView({behavior:'smooth'})">Get early access</button>
+  </div>
+</nav>
+
+<!-- TOP BANNER — big, amber, unmissable -->
+<div class="app-banner">
+  <div class="ab-main"><span class="ab-icon">📱</span>BUDGETING APP</div>
+  <div class="ab-sep"></div>
+  <div class="ab-sub">Mobile app for iOS & Android — currently in development</div>
+  <div class="ab-pill">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+    App Store
+  </div>
+  <div class="ab-pill">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.3.17.64.22.99.15l12.6-12.6-3.03-3.04L3.18 23.76zm16.4-12.75c.35-.31.57-.75.57-1.26 0-.51-.22-.95-.57-1.26l-2.1-1.21-3.35 3.35 3.35 3.35 2.1-1.21v.24zM1.18 1.15C1.07 1.38 1 1.65 1 1.97v19.86c0 .33.07.6.19.83l.09.09 11.12-11.12v-.26L1.27 1.06l-.09.09zm7.58 12.47L4.71 17.67l-1.53-1.44V7.79l1.53-1.44 4.05 4.05-3.1 3.22z"/></svg>
+    Google Play
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <!-- HERO IN-PAGE APP TYPE TAG -->
+      <div class="hero-app-tag">
+        <span class="hat-icon">📱</span>
+        Budgeting App
+        <span class="hat-div"></span>
+        <span class="hat-sub">iOS & Android · Coming soon</span>
+      </div>
+
+      <h1>Finally know what<br>you can <em>actually</em><br>spend today.</h1>
+
+      <p class="hero-sub">
+        Spendly separates your fixed costs — rent, loans, bills — automatically.
+        What's left is your real daily budget.
+        <strong>Spend under it and tomorrow grows. Spend over and tomorrow shrinks.</strong>
+        No monthly resets. No pretending last week didn't happen.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.querySelector('.cta-section').scrollIntoView({behavior:'smooth'})">Get early access →</button>
+        <button class="btn-ghost" onclick="document.querySelector('#how').scrollIntoView({behavior:'smooth'})">How it works</button>
+      </div>
+
+      <div class="store-badges">
+        <div class="sbadge">
+          <span class="sbadge-tag">Soon</span>
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div><div class="sbt">Download on the</div><div class="sbb">App Store</div></div>
+        </div>
+        <div class="sbadge">
+          <span class="sbadge-tag">Soon</span>
+          <svg viewBox="0 0 24 24"><path d="M3.18 23.76c.3.17.64.22.99.15l12.6-12.6-3.03-3.04L3.18 23.76zm16.4-12.75c.35-.31.57-.75.57-1.26 0-.51-.22-.95-.57-1.26l-2.1-1.21-3.35 3.35 3.35 3.35 2.1-1.21v.24zM1.18 1.15C1.07 1.38 1 1.65 1 1.97v19.86c0 .33.07.6.19.83l.09.09 11.12-11.12v-.26L1.27 1.06l-.09.09zm7.58 12.47L4.71 17.67l-1.53-1.44V7.79l1.53-1.44 4.05 4.05-3.1 3.22z"/></svg>
+          <div><div class="sbt">Get it on</div><div class="sbb">Google Play</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHONE — fixed 252×546 -->
+    <div class="mockup-wrap">
+      <div class="mockup-glow"></div>
+      <div class="phone">
+        <div class="phone-inner">
+          <div class="di"></div>
+          <div class="pscreen">
+            <div class="pstatus"><span>9:41</span><div class="psr"><span>●●●</span><span>🔋</span></div></div>
+            <div class="phead"><div class="pname">Spendly</div><div class="pdate">Wednesday, Mar 4</div></div>
+            <div class="pbal">
+              <div class="pbl">Available today</div>
+              <div class="pba">$94.30</div>
+              <div class="pbp">↩ +$21.80 saved yesterday</div>
+            </div>
+            <div class="pmetrics">
+              <div class="pmrow"><span class="pmk">Base daily</span><span class="pmv">$72.50</span></div>
+              <div class="pmrow"><span class="pmk">Rolled over</span><span class="pmv g">+$21.80</span></div>
+              <div class="pmrow"><span class="pmk">Spent today</span><span class="pmv">$36.10</span></div>
+              <div class="pmrow"><span class="pmk">Remaining</span><span class="pmv g">$58.20</span></div>
+              <div class="pbar"><div class="pbt"><div class="pbf"></div></div><div class="pbl2"><span>38% spent</span><span>$58.20 left</span></div></div>
+            </div>
+            <div class="pfixed">
+              <div class="pfl">Fixed — set aside, protected</div>
+              <div class="pfv">$1,240 · rent + loan + spotify</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span class="ti">📱 Budgeting app for iOS & Android<span class="sep">◆</span></span>
+      <span class="ti">Rollover works both ways<span class="sep">◆</span></span>
+      <span class="ti">Fixed expenses always protected<span class="sep">◆</span></span>
+      <span class="ti">No monthly resets ever<span class="sep">◆</span></span>
+      <span class="ti">7-day free trial<span class="sep">◆</span></span>
+      <span class="ti">30-day trial for early access<span class="sep">◆</span></span>
+      <span class="ti">Weekend mode built in<span class="sep">◆</span></span>
+      <span class="ti">📱 Budgeting app for iOS & Android<span class="sep">◆</span></span>
+      <span class="ti">Rollover works both ways<span class="sep">◆</span></span>
+      <span class="ti">Fixed expenses always protected<span class="sep">◆</span></span>
+      <span class="ti">No monthly resets ever<span class="sep">◆</span></span>
+      <span class="ti">7-day free trial<span class="sep">◆</span></span>
+      <span class="ti">30-day trial for early access<span class="sep">◆</span></span>
+      <span class="ti">Weekend mode built in<span class="sep">◆</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem-section">
+  <div class="container">
+    <div class="pgrid">
+      <div>
+        <div class="section-label">The problem</div>
+        <h2>You never actually know what you can <em>spend today.</em></h2>
+        <p class="lead">You have rent due, a loan payment, subscriptions, and groceries — and at 7pm you're in a store doing mental math, still not sure if you can afford this.</p>
+        <p class="lead">Monthly apps give you one big number for the month. They don't tell you what's safe today. And when the month resets, every good day and bad day disappears.</p>
+      </div>
+      <div>
+        <ul class="plist">
+          <li><span class="num">01</span><span>Your monthly budget doesn't tell you what's safe to spend on a random Wednesday</span></li>
+          <li><span class="num">02</span><span>Frugal days evaporate — savings don't carry into tomorrow, they vanish into the monthly pool</span></li>
+          <li><span class="num">03</span><span>Fixed expenses mix with daily spending, making every number feel unreliable</span></li>
+          <li><span class="num">04</span><span>One overspend and the whole system loses credibility — until the 1st rolls around again</span></li>
+        </ul>
+        <div class="qblock">
+          <blockquote>"I know roughly what I earn and what my bills are — but I genuinely don't know what I can spend today without messing up next week."</blockquote>
+          <div class="qmeta">The person Spendly was built for</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div class="how-header">
+      <div>
+        <div class="section-label">The mechanic</div>
+        <h2>Good days build up.<br><em>Bad days cost you tomorrow.</em></h2>
+      </div>
+      <p class="section-desc">Three ideas that make your daily number trustworthy. Fixed expenses are completely separate — what rolls forward is only what's genuinely yours to spend.</p>
+    </div>
+    <div class="fgrid">
+      <div class="fitem">
+        <div class="fnum">01 · Core mechanic</div>
+        <h3>Daily<br><em>Rollover</em></h3>
+        <p>Unspent money carries to tomorrow. Overspent money comes out of tomorrow. Both directions, automatically. Every day is connected — no fresh starts, no pretending.</p>
+      </div>
+      <div class="fitem">
+        <div class="fnum">02 · Clarity</div>
+        <h3>Daily &<br><em>Fixed</em></h3>
+        <p><strong style="color:var(--forest)">Fixed</strong> holds rent, loans, subscriptions — set once, never touched by the rollover. <strong style="color:var(--forest)">Daily</strong> is what's genuinely left. When Spendly says $94, your rent is already covered.</p>
+      </div>
+      <div class="fitem">
+        <div class="fnum">03 · Flexibility</div>
+        <h3>Weekend<br><em>Mode</em></h3>
+        <p>Set a higher daily budget for weekends. If your Saturdays cost more than your Tuesdays, your budget should reflect that — not punish you for it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MECHANIC -->
+<section class="mech-section">
+  <div class="container">
+    <div class="section-label">How the rollover really works</div>
+    <h2>The math is honest.<br><em>In both directions.</em></h2>
+    <div class="mgrid">
+      <div class="mcard good">
+        <div class="micon">↑</div>
+        <h4>You spend $50 on a $72 daily budget.</h4>
+        <p>You saved $22. Tomorrow starts at $72 + $22 = $94. No ceremony, no transfers. It just happens automatically.</p>
+      </div>
+      <div class="mcard bad">
+        <div class="micon">↓</div>
+        <h4>You spend $95 on a $72 daily budget.</h4>
+        <p>You overspent $23. Tomorrow starts at $72 − $23 = $49. The math is honest. No reset button. That's exactly the point.</p>
+      </div>
+      <div class="mnote">
+        <strong>This is different from every other budgeting app.</strong> Most apps let a bad week disappear on the 1st of the month. Spendly doesn't offer that escape — but every good day is genuinely rewarded, not quietly absorbed into a pool that resets anyway.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="cmp-section" id="compare">
+  <div class="container">
+    <div class="section-label">Comparison</div>
+    <h2>Designed for daily life,<br><em>not monthly spreadsheets.</em></h2>
+    <table class="ctable">
+      <thead>
+        <tr>
+          <th style="width:36%">Feature</th>
+          <th class="hl" style="width:22%">Spendly</th>
+          <th style="width:21%">YNAB</th>
+          <th style="width:21%">Mint / Generic</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="feat">Tells you what you can spend today</td><td class="hl"><span class="chk">✓</span>Always</td><td><span class="dsh">— Monthly view</span></td><td><span class="xmk">✗</span></td></tr>
+        <tr><td class="feat">Fixed expenses separated automatically</td><td class="hl"><span class="chk">✓</span>Built in</td><td><span class="dsh">— Manual setup</span></td><td><span class="dsh">— Manual</span></td></tr>
+        <tr><td class="feat">Unspent money carries forward daily</td><td class="hl"><span class="chk">✓</span>Automatic</td><td><span class="dsh">— Monthly only</span></td><td><span class="xmk">✗</span></td></tr>
+        <tr><td class="feat">Overspend reduces tomorrow — no hiding</td><td class="hl"><span class="chk">✓</span>Always honest</td><td><span class="xmk">✗ Monthly reset</span></td><td><span class="xmk">✗ Monthly reset</span></td></tr>
+        <tr><td class="feat">Weekend spending adjustment built in</td><td class="hl"><span class="chk">✓</span>Built in</td><td><span class="dsh">— Manual</span></td><td><span class="xmk">✗</span></td></tr>
+        <tr><td class="feat">Simple enough to open every single day</td><td class="hl"><span class="chk">✓</span>One number</td><td><span class="dsh">— Learning curve</span></td><td><span class="dsh">— Varies</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="price-section" id="pricing">
+  <div class="container">
+    <div class="price-header">
+      <div class="section-label">Pricing</div>
+      <h2>Try it free.<br><em>Pay only if you love it.</em></h2>
+      <p>No free tier, no watered-down version. Full access on trial. Pay when you decide it's worth it.</p>
+    </div>
+    <div class="pricegrid">
+      <div class="pcrd">
+        <div class="pplan">Pro · Monthly</div>
+        <div class="pprice">$4</div>
+        <div class="pperiod">per month</div>
+        <div class="ptrial">🕐 7-day free trial</div>
+        <ul class="pfeats">
+          <li>Full daily rolling balance</li>
+          <li>Daily & Fixed categories</li>
+          <li>Unlimited fixed expenses</li>
+          <li>Weekend mode</li>
+          <li>Full spending history</li>
+          <li>Monthly savings projection</li>
+          <li>iOS & Android</li>
+        </ul>
+        <button class="pbutton outline" onclick="document.querySelector('.cta-section').scrollIntoView({behavior:'smooth'})">Join waitlist →</button>
+      </div>
+      <div class="pcrd feat">
+        <div class="pbdg">Best value · Save $14/year</div>
+        <div class="pplan">Pro · Annual</div>
+        <div class="pprice">$34</div>
+        <div class="pperiod">per year · $2.83/month</div>
+        <div class="ptrial">🕐 7-day free trial</div>
+        <ul class="pfeats">
+          <li>Everything in monthly</li>
+          <li>Save $14 vs monthly billing</li>
+          <li>Priority early access</li>
+          <li>Input on upcoming features</li>
+          <li>Founding member status</li>
+        </ul>
+        <button class="pbutton solid" onclick="document.querySelector('.cta-section').scrollIntoView({behavior:'smooth'})">Join waitlist →</button>
+      </div>
+    </div>
+    <div class="trial-note">
+      <strong>Join the waitlist today</strong> and your free trial extends to <strong>30 full days</strong> — 4× longer than standard.<br>No credit card required. No commitment.
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="section-label">Early access</div>
+    <h2>Your quiet Tuesday<br>funds your <em>big Friday.</em></h2>
+    <p>First when we launch on iOS & Android. Leave your email and get 30 days free — 4× the normal trial.</p>
+    <div class="ebbox">
+      <div class="eblbl">🎁 Early access offer</div>
+      <div class="ebhead">30 days free.<br>No credit card.</div>
+      <div class="ebsub">Standard trial is 7 days. Waitlist members get 30 — the full first month free. No card required. Just your email and you're in.</div>
+      <form class="cform" id="waitlist-form" action="https://submit-form.com/EFyypuWyw" method="POST">
+        <input type="hidden" name="_redirect" value="false" />
+        <input class="cinput" type="email" name="email" placeholder="your@email.com" required />
+        <button class="csubmit" type="submit">Claim 30-day trial →</button>
+      </form>
+      <p class="cfine" id="form-msg">No credit card · No spam · Cancel anytime · iOS & Android</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Spend<span class="dot">ly</span></div>
+  <p>Built by someone who couldn't find this app anywhere — so they made it.</p>
+</footer>
+<script>
+document.getElementById('waitlist-form').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const form=this,btn=form.querySelector('.csubmit'),msg=document.getElementById('form-msg'),email=form.querySelector('input[name="email"]');
+  btn.disabled=true;btn.textContent='Sending...';
+  try{
+    const res=await fetch('https://submit-form.com/EFyypuWyw',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email:email.value})});
+    if(res.ok){
+      msg.textContent="You're in! We'll email you when Spendly launches.";
+      msg.style.color='#40916C';
+      email.value='';btn.textContent="You're on the list \u2713";
+    }else{
+      msg.textContent='Something went wrong. Please try again.';
+      msg.style.color='#D4654A';
+      btn.textContent='Claim 30-day trial →';btn.disabled=false;
+    }
+  }catch{
+    msg.textContent='Connection error. Please try again.';
+    msg.style.color='#D4654A';
+    btn.textContent='Claim 30-day trial →';btn.disabled=false;
+  }
+});
+</script>
+</body>
+</html>
