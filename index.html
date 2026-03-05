@@ -62,13 +62,13 @@
         --fglow: rgba(45, 106, 79, 0.13);
         --amber: #c17817;
         --honey: #d4a34b;
-        --hpale: rgba(212, 163, 75, 0.1);
-        --hglow: rgba(212, 163, 75, 0.22);
+        --hpale: rgba(212, 163, 75, 0.14);
+        --hglow: rgba(212, 163, 75, 0.32);
         --coral: #d4654a;
         --text: #1a1a1a;
         --tbody: #3d3d3d;
         --tmuted: #7a7567;
-        --tlight: #a09889;
+        --tlight: #8a8174;
         --border: rgba(27, 67, 50, 0.08);
       }
       html {
@@ -545,12 +545,15 @@
       .pmv.g {
         color: var(--fmid);
       }
+      .pmv.w {
+        color: var(--coral);
+      }
 
       .pbar {
         padding-top: 0.38rem;
       }
       .pbt {
-        height: 4px;
+        height: 6px;
         background: var(--bg-warm);
         border-radius: 999px;
         overflow: hidden;
@@ -599,6 +602,52 @@
         font-size: 0.64rem;
         color: var(--amber);
         font-weight: 500;
+      }
+
+      .psavings {
+        background: var(--fpale);
+        border: 1px solid var(--fglow);
+        border-radius: 11px;
+        padding: 0.55rem 0.7rem;
+        flex-shrink: 0;
+      }
+      .psl {
+        font-size: 0.53rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--tmuted);
+        font-weight: 600;
+        margin-bottom: 0.18rem;
+      }
+      .psv {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--fmid);
+        font-weight: 500;
+      }
+      .pss {
+        font-family: "Source Sans 3", sans-serif;
+        font-size: 0.52rem;
+        color: var(--tlight);
+        font-weight: 600;
+      }
+      .psbar {
+        height: 4px;
+        background: var(--bg-warm);
+        border-radius: 999px;
+        overflow: hidden;
+        margin-top: 0.35rem;
+      }
+      .psbf {
+        height: 100%;
+        width: 68%;
+        background: linear-gradient(90deg, var(--flight), var(--fmid));
+        border-radius: 999px;
+        animation: savingsGrow 1.6s 1s ease both;
+      }
+      @keyframes savingsGrow {
+        from { width: 0; }
+        to { width: 68%; }
       }
 
       @keyframes fadeUp {
@@ -1203,7 +1252,7 @@
                   </div>
                   <div class="pmrow">
                     <span class="pmk">Spent today</span
-                    ><span class="pmv">$36.10</span>
+                    ><span class="pmv w">$36.10</span>
                   </div>
                   <div class="pmrow">
                     <span class="pmk">Remaining</span
@@ -1219,6 +1268,11 @@
                 <div class="pfixed">
                   <div class="pfl">Fixed — set aside, protected</div>
                   <div class="pfv">$1,240 · rent + loan + spotify</div>
+                </div>
+                <div class="psavings">
+                  <div class="psl">Monthly projection</div>
+                  <div class="psv">~$218 <span class="pss">saved this month</span></div>
+                  <div class="psbar"><div class="psbf"></div></div>
                 </div>
               </div>
             </div>

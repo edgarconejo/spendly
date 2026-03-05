@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spendly Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #faf6f0; --bg-warm: #f4ede3; --surface: #fff;
+    --forest: #1b4332; --fmid: #2d6a4f; --flight: #40916c;
+    --fpale: rgba(27, 67, 50, 0.06); --fglow: rgba(45, 106, 79, 0.13);
+    --amber: #c17817; --honey: #d4a34b;
+    --hpale: rgba(212, 163, 75, 0.14); --hglow: rgba(212, 163, 75, 0.32);
+    --coral: #d4654a;
+    --text: #1a1a1a; --tbody: #3d3d3d; --tmuted: #7a7567; --tlight: #8a8174;
+    --border: rgba(27, 67, 50, 0.08);
+  }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: transparent;
+    font-family: "Source Sans 3", sans-serif;
+  }
+
+  .phone {
+    width: 252px;
+    height: 546px;
+    background: #111;
+    border-radius: 46px;
+    padding: 9px;
+    box-shadow:
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.08),
+      0 2px 4px rgba(0, 0, 0, 0.4),
+      0 20px 60px rgba(0, 0, 0, 0.28),
+      0 40px 90px rgba(27, 67, 50, 0.14);
+    position: relative;
+  }
+  .phone::before {
+    content: "";
+    position: absolute;
+    left: -3px;
+    top: 76px;
+    width: 3px;
+    height: 28px;
+    background: #222;
+    border-radius: 2px 0 0 2px;
+    box-shadow: 0 40px 0 #222, 0 72px 0 #222;
+  }
+  .phone::after {
+    content: "";
+    position: absolute;
+    right: -3px;
+    top: 96px;
+    width: 3px;
+    height: 48px;
+    background: #222;
+    border-radius: 0 2px 2px 0;
+  }
+  .phone-inner {
+    background: var(--bg);
+    border-radius: 38px;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .di {
+    width: 80px;
+    height: 24px;
+    background: #111;
+    border-radius: 999px;
+    margin: 8px auto 0;
+    flex-shrink: 0;
+  }
+  .pscreen {
+    padding: 0.5rem 0.85rem 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.48rem;
+    overflow: hidden;
+    flex: 1;
+  }
+  .pstatus {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: var(--text);
+    padding-bottom: 0.1rem;
+  }
+  .psr { display: flex; gap: 0.3rem; font-size: 0.55rem; }
+  .phead { text-align: center; }
+  .pname {
+    font-family: "Libre Baskerville", serif;
+    font-size: 0.82rem;
+    color: var(--forest);
+    font-weight: 700;
+  }
+  .pdate {
+    font-size: 0.54rem;
+    color: var(--tlight);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+  }
+  .pbal {
+    background: var(--forest);
+    border-radius: 18px;
+    padding: 0.85rem 0.9rem;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .pbl {
+    font-size: 0.53rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+  .pba {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.95rem;
+    line-height: 1;
+    color: #fff;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+  .pbp {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(212, 163, 75, 0.22);
+    border: 1px solid rgba(212, 163, 75, 0.38);
+    color: #d4a34b;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.53rem;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+  }
+  .pmetrics {
+    background: var(--surface);
+    border-radius: 13px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .pmrow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0;
+  }
+  .pmrow + .pmrow { border-top: 1px solid var(--border); }
+  .pmk {
+    font-size: 0.54rem;
+    color: var(--tlight);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .pmv {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.65rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .pmv.g { color: var(--fmid); }
+  .pmv.w { color: var(--coral); }
+  .pbar { padding-top: 0.38rem; }
+  .pbt {
+    height: 6px;
+    background: var(--bg-warm);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.26rem;
+  }
+  .pbf {
+    height: 100%;
+    width: 38%;
+    background: linear-gradient(90deg, var(--flight), var(--forest));
+    border-radius: 999px;
+  }
+  .pbl2 {
+    display: flex;
+    justify-content: space-between;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.49rem;
+    color: var(--tlight);
+  }
+  .pfixed {
+    background: var(--hpale);
+    border: 1px solid var(--hglow);
+    border-radius: 11px;
+    padding: 0.55rem 0.7rem;
+    flex-shrink: 0;
+  }
+  .pfl {
+    font-size: 0.53rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--tmuted);
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+  }
+  .pfv {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.64rem;
+    color: var(--amber);
+    font-weight: 500;
+  }
+  .psavings {
+    background: var(--fpale);
+    border: 1px solid var(--fglow);
+    border-radius: 11px;
+    padding: 0.55rem 0.7rem;
+    flex-shrink: 0;
+  }
+  .psl {
+    font-size: 0.53rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--tmuted);
+    font-weight: 600;
+    margin-bottom: 0.18rem;
+  }
+  .psv {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.7rem;
+    color: var(--fmid);
+    font-weight: 500;
+  }
+  .pss {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 0.52rem;
+    color: var(--tlight);
+    font-weight: 600;
+  }
+  .psbar {
+    height: 4px;
+    background: var(--bg-warm);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 0.35rem;
+  }
+  .psbf {
+    height: 100%;
+    width: 68%;
+    background: linear-gradient(90deg, var(--flight), var(--fmid));
+    border-radius: 999px;
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="phone-inner">
+      <div class="di"></div>
+      <div class="pscreen">
+        <div class="pstatus">
+          <span>9:41</span>
+          <div class="psr"><span>●●●</span><span>🔋</span></div>
+        </div>
+        <div class="phead">
+          <div class="pname">Spendly</div>
+          <div class="pdate">Wednesday, Mar 4</div>
+        </div>
+        <div class="pbal">
+          <div class="pbl">Available today</div>
+          <div class="pba">$94.30</div>
+          <div class="pbp">↩ +$21.80 saved yesterday</div>
+        </div>
+        <div class="pmetrics">
+          <div class="pmrow">
+            <span class="pmk">Base daily</span><span class="pmv">$72.50</span>
+          </div>
+          <div class="pmrow">
+            <span class="pmk">Rolled over</span><span class="pmv g">+$21.80</span>
+          </div>
+          <div class="pmrow">
+            <span class="pmk">Spent today</span><span class="pmv w">$36.10</span>
+          </div>
+          <div class="pmrow">
+            <span class="pmk">Remaining</span><span class="pmv g">$58.20</span>
+          </div>
+          <div class="pbar">
+            <div class="pbt"><div class="pbf"></div></div>
+            <div class="pbl2">
+              <span>38% spent</span><span>$58.20 left</span>
+            </div>
+          </div>
+        </div>
+        <div class="pfixed">
+          <div class="pfl">Fixed — set aside, protected</div>
+          <div class="pfv">$1,240 · rent + loan + spotify</div>
+        </div>
+        <div class="psavings">
+          <div class="psl">Monthly projection</div>
+          <div class="psv">~$218 <span class="pss">saved this month</span></div>
+          <div class="psbar"><div class="psbf"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
